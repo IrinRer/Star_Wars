@@ -10,9 +10,17 @@ const Card = () => {
     <div className={styles.wrapper}>
       {characters.map((item) => (
         <div className={styles.wrapper_card}>
-          <p>{item.name}</p>
-          <div>{item.height}</div>
-          <div>{item.mass}</div>
+          <p className={styles.title}>{item.name}</p>
+          <div className={styles.wrapper_card_circle}>
+            <div className={styles.card_circle_container}>
+              <div className={styles.circle}>{item.height}</div>
+              <span>height</span>
+            </div>
+            <div className={styles.card_circle_container}>
+              <div className={styles.circle}>{item.mass}</div>
+              <span>mass</span>
+            </div>
+          </div>
           <div>{item.gender.toLowerCase()}</div>
           <div>{item.birth_year}</div>
         </div>
