@@ -5,10 +5,8 @@ import { ROUTES } from 'constants/route';
 import styles from './index.module.scss';
 
 const Header = () => {
-
-
   return (
-    <div className={styles.wrapper}>
+    <nav className={styles.wrapper}>
       <Logo />
       <div className={styles.wrapper_link}>
         <NavLink
@@ -29,7 +27,7 @@ const Header = () => {
           {ROUTES.characters.name}
         </NavLink>
       </div>
-    </div>
+    </nav>
   );
 };
 

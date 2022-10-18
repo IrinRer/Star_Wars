@@ -1,4 +1,5 @@
 import React from 'react';
+import { ROUTES } from 'constants/route';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as NotFound } from 'assets/img/404.svg';
 import styles from './index.module.scss';
@@ -11,7 +12,7 @@ const Error: React.FC<IProps> = ({ text }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(-1);
+    navigate(ROUTES.home.path);
   };
 
   return (
