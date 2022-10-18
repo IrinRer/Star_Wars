@@ -1,4 +1,5 @@
 import React from 'react';
+import { ReactComponent as NotFound } from 'assets/img/404.svg';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -8,7 +9,11 @@ interface IProps {
 const Error: React.FC<IProps> = ({ text }) => {
   return (
     <div className={styles.wrapper}>
-      <p>{text}</p>
+      <div className={styles.wrapper_text}>
+        <NotFound />
+        <p>{text}</p>
+      </div>
+      <button type="button">Return</button>
     </div>
   );
 };

@@ -1,7 +1,13 @@
+import Header from 'component/Header';
 import React from 'react';
 
 const Characters = () => {
-  return <p>characters</p>;
+  return (
+    <>
+      <Header />
+      <p>characters</p>;
+    </>
+  );
 };
 
 export default Characters;
