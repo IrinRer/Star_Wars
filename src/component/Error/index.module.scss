@@ -31,10 +31,10 @@
     font-size: 23px;
     line-height: 27px;
     cursor: pointer;
-    transition: .5s all;
+    transition: 0.5s all;
 
     &:hover {
-        background-color: #61b764;
+      transform: scale(1.05);
     }
   }
 }
