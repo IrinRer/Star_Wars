@@ -1,6 +1,7 @@
 import { useAppSelector } from 'hooks/redux/useAppSelector';
 import React from 'react';
 import { getCharacters } from 'store/data/selectors';
+import Tag from '../Tag';
 import styles from './index.module.scss';
 
 const Card = () => {
@@ -21,8 +22,12 @@ const Card = () => {
               <span>mass</span>
             </div>
           </div>
-          <div>{item.gender.toLowerCase()}</div>
-          <div>{item.birth_year}</div>
+          <div className={styles.tag_wrapper}>
+            {item.gender !== 'n/a' ? <Tag text={item.gender} /> : null}
+            {item.birth_year !== 'unknown' ? (
+              <Tag text={item.birth_year} />
+            ) : null}
+          </div>
         </div>
       ))}
     </div>
