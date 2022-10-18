@@ -1,7 +1,8 @@
+import CreateRoutes from 'container/Route';
 import React from 'react';
 
 const App = () => {
-  return <h2>app</h2>;
+  return <CreateRoutes/>;
 };
 
 export default App;
