@@ -9,8 +9,6 @@ body {
   font-family: 'Karla', -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-   background: #17002F;
-   background: linear-gradient(180deg, #1F2A63 0%, #17002F 100%) no-repeat;
 }
 
 code {
