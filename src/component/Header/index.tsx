@@ -5,16 +5,29 @@ import { ROUTES } from 'constants/route';
 import styles from './index.module.scss';
 
 const Header = () => {
+
+
   return (
     <div className={styles.wrapper}>
       <Logo />
-      <div className={styles.wrapper_link}>  
-      <NavLink to={ROUTES.home.path} className={styles.link}>
-        {ROUTES.home.name}
-      </NavLink>
-      <NavLink to={ROUTES.characters.path} className={styles.link}>
-        {ROUTES.characters.name}
-      </NavLink>
+      <div className={styles.wrapper_link}>
+        <NavLink
+          to={ROUTES.home.path}
+          end
+          className={({ isActive }) =>
+            isActive ? styles.link_active : styles.link
+          }
+        >
+          {ROUTES.home.name}
+        </NavLink>
+        <NavLink
+          to={ROUTES.characters.path}
+          className={({ isActive }) =>
+            isActive ? styles.link_active : styles.link
+          }
+        >
+          {ROUTES.characters.name}
+        </NavLink>
       </div>
     </div>
   );

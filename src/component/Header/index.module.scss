@@ -16,6 +16,23 @@
       font-size: 25px;
       line-height: 29px;
       color: $gray;
+      text-decoration: none;
+    }
+
+    .link_active {
+      font-weight: 400;
+      font-size: 25px;
+      line-height: 29px;
+      color: $gray;
+      text-decoration: none;
+
+      &::after {
+        content: '';
+        display: block;
+        height: 2px;
+        margin-top: 15px;
+        background-color: $line;
+      }
     }
   }
 }
