@@ -1,0 +1,42 @@
+.wrapper_card_circle {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  .circle {
+    border: 3px solid black;
+    display: flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    border-radius: 50%;
+  }
+}
+
+.card_circle_container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  span {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    color: #4b4b4b;
+    margin-top: 5px;
+  }
+}
+
+.card_circle_container[data-block='true'] {
+  background: #fdfdfd;
+  box-shadow: 4px 4px 24px rgba(1, 17, 38, 0.2);
+  border-radius: 8px;
+  padding: 10px 20px;
+
+  .circle {
+    font-size: 20px;
+  }
+}

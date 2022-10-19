@@ -5,6 +5,7 @@ import { DATA_SLICE_ALIAS } from './types';
 
 const initialState: any = {
   characters: [],
+  selectedCharacter: {},
   loading: false,
   error: null,
 };
@@ -13,10 +14,9 @@ export const dataSlice = createSlice({
   name: DATA_SLICE_ALIAS,
   initialState,
   reducers: {
-    // setDocument: (state, action: PayloadAction<string>) => {
-    //   state.document = action.payload;
-    //   state.postData.document = action.payload;
-    // },
+    setSelectedCharacter: (state, action: PayloadAction<any>) => {
+      state.selectedCharacter = action.payload;
+    },
   },
   extraReducers: {
     [dataFetchAction.pending.type]: (state) => {
@@ -42,5 +42,5 @@ export const dataSlice = createSlice({
   },
 });
 
-// export const { setName, setDocument, clearNameDocument } = dataSlice.actions;
+export const { setSelectedCharacter } = dataSlice.actions;
 export default dataSlice.reducer;
