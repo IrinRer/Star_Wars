@@ -3,14 +3,15 @@ import Modal from 'component/Modal';
 import { useAppDispatch } from 'hooks/redux/useAppDispatch';
 import { useAppSelector } from 'hooks/redux/useAppSelector';
 import usePagination from 'hooks/usePagination';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   getCharacters,
   getLoading,
+  getPage,
   getSearchLoading,
 } from 'store/data/selectors';
 import classnames from 'classnames';
-import { setSelectedCharacter } from 'store/data/slice';
+import { setPageStore, setSelectedCharacter } from 'store/data/slice';
 import Circle from '../Circle';
 import Tag from '../Tag';
 import styles from './index.module.scss';
@@ -18,6 +19,7 @@ import styles from './index.module.scss';
 const Card = () => {
   const characters = useAppSelector(getCharacters);
   const loading = useAppSelector(getLoading);
+  const pageStore = useAppSelector(getPage);
   const loadingSearch = useAppSelector(getSearchLoading);
   const { firstContentIndex, lastContentIndex, page, setPage, totalPages } =
     usePagination({
@@ -26,15 +28,20 @@ const Card = () => {
     });
   const dispatch = useAppDispatch();
   const [isOpen, setOpen] = useState<boolean>(false);
+  const elementRef = useRef<any>();
 
   const handleClick = (character) => {
     setOpen((state) => !state);
     dispatch(setSelectedCharacter(character));
   };
 
+  const handlePagination = () => {
+    dispatch(setPageStore(pageStore + 1));
+  };
+
   return (
     <div className={styles.wrapper_main}>
-    <div className={styles.wrapper}>
+      <div className={styles.wrapper}>
         {!loadingSearch && !loading ? (
           characters.slice(firstContentIndex, lastContentIndex).map((item) => (
             <div
@@ -53,21 +60,29 @@ const Card = () => {
         ) : (
           <Loader dark />
         )}
-      <Modal isOpen={isOpen} setOpen={setOpen} />
+        <Modal isOpen={isOpen} setOpen={setOpen} />
+      </div>
+      {elementRef.current === page ? (
+        <button type="button" className={styles.btn} onClick={handlePagination}>
+          Загрузить еще
+        </button>
+      ) : null}
+      <div className={styles.pagination}>
+        {[...Array(totalPages).keys()].map((el) => {
+          elementRef.current = el + 1;
+          return (
+            <button
+              onClick={() => setPage(el + 1)}
+              key={el}
+              className={classnames(styles.page, {
+                [styles.page_active]: page === el + 1,
+              })}
+              type="button"
+            />
+          );
+        })}
+      </div>
     </div>
-     <div className={styles.pagination}>
-     {[...Array(totalPages).keys()].map((el) => (
-       <button
-         onClick={() => setPage(el + 1)}
-         key={el}
-         className={classnames(styles.page, {
-           [styles.page_active]: page === el + 1,
-         })}
-         type="button"
-       />
-     ))}
-   </div>
-   </div>
   );
 };
 

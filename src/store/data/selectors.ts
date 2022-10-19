@@ -6,3 +6,4 @@ export const getLoading = (state: RootState) => state.data.loading;
 export const getSearchCharacters = (state: RootState) => state.data.searchCharacter;
 export const getSearchLoading = (state: RootState) => state.data.loadingSearch;
 export const getCount = (state: RootState) => state.data.totalCount;
+export const getPage = (state: RootState) => state.data.page;

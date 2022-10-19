@@ -6,6 +6,7 @@ import { DATA_SLICE_ALIAS } from './types';
 const initialState: any = {
   characters: [],
   totalCount: 0,
+  page: 1,
   selectedCharacter: {},
   searchCharacter: '',
   loading: false,
@@ -28,6 +29,9 @@ export const dataSlice = createSlice({
         (item) => item.eye_color === action.payload,
       );
     },
+    setPageStore: (state, action: PayloadAction<number>) => {
+      state.page = action.payload;
+    },
   },
   extraReducers: {
     [dataFetchAction.pending.type]: (state) => {
@@ -39,7 +43,15 @@ export const dataSlice = createSlice({
       state,
       { payload }: PayloadAction<any>,
     ) => {
-      state.characters = payload.data;
+      if (!state.chacharacters) {
+        state.chacharacters = payload.data;
+      }
+      const arr = state.characters.concat(payload.data);
+      state.characters = arr.filter(
+        (item: any, i: any) =>
+          arr.findIndex((a: any) => a.name === item.name) === i,
+      );
+
       state.totalCount = payload.count;
       state.loading = false;
     },
@@ -78,5 +90,6 @@ export const dataSlice = createSlice({
   },
 });
 
-export const { setSelectedCharacter, setSearchCharacter, setFilter} = dataSlice.actions;
+export const { setSelectedCharacter, setSearchCharacter, setPageStore } =
+  dataSlice.actions;
 export default dataSlice.reducer;
