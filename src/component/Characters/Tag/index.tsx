@@ -2,7 +2,11 @@ import { NOT_FOUND, tag } from 'constants/common';
 import React from 'react';
 import styles from './index.module.scss';
 
-const Tag = ({ text }) => {
+interface IProps {
+  text: string;
+}
+
+const Tag: React.FC<IProps> = ({ text }) => {
   if (text === NOT_FOUND.NA || text === NOT_FOUND.UNKNOWN) {
     return null;
   }

@@ -31,7 +31,7 @@ export const dataSlice = createSlice({
     },
     setPageStore: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
-    },
+    }
   },
   extraReducers: {
     [dataFetchAction.pending.type]: (state) => {
@@ -90,6 +90,9 @@ export const dataSlice = createSlice({
   },
 });
 
-export const { setSelectedCharacter, setSearchCharacter, setPageStore } =
-  dataSlice.actions;
+export const {
+  setSelectedCharacter,
+  setSearchCharacter,
+  setPageStore,
+} = dataSlice.actions;
 export default dataSlice.reducer;

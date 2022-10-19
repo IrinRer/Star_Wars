@@ -3,7 +3,7 @@ import { useAppSelector } from 'hooks/redux/useAppSelector';
 import useDebounce from 'hooks/useDebounce';
 import React, { useEffect } from 'react';
 import { getCount, getPage, getSearchCharacters } from 'store/data/selectors';
-import { setSearchCharacter } from 'store/data/slice';
+import { setPageStore, setSearchCharacter } from 'store/data/slice';
 import { dataFetchAction, searchDataAction } from 'store/data/thunk';
 import styles from './index.module.scss';
 
@@ -18,7 +18,8 @@ const Search = () => {
     if (debouncedSearch) {
       dispatch(searchDataAction(debouncedSearch));
     } else {
-      dispatch(dataFetchAction(page));
+      dispatch(dataFetchAction(1));
+      dispatch(setPageStore(1));
     }
   }, [dispatch, debouncedSearch, page]);
 
@@ -26,6 +27,7 @@ const Search = () => {
     const target = e.target as HTMLInputElement;
     dispatch(setSearchCharacter(target.value));
   };
+
 
   return (
     <div>

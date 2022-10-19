@@ -8,6 +8,7 @@ export const dataFetchAction = createAsyncThunk(
   async (page: number, { rejectWithValue }) => {
     try {
       const response: AxiosResponse = await api().get(`people/?page=${page}`);
+
       return { count: response.data.count, data: response.data.results };
     } catch (error) {
       return rejectWithValue(error.message);
