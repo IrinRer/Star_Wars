@@ -29,6 +29,7 @@ export const dataSlice = createSlice({
       { payload }: PayloadAction<any>,
     ) => {
       state.characters = payload;
+      state.loading = false;
     },
 
     [dataFetchAction.rejected.type]: (
