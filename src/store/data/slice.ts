@@ -1,13 +1,22 @@
 import { dataFetchAction, searchDataAction } from 'store/data/thunk';
 import { AxiosError } from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DATA_SLICE_ALIAS } from './types';
+import { DataItem, DataSlice, DATA_SLICE_ALIAS } from './types';
 
-const initialState: any = {
+const initialState: DataSlice = {
   characters: [],
   totalCount: 0,
   page: 1,
-  selectedCharacter: {},
+  selectedCharacter: {
+    name: '',
+    gender: '',
+    eye_color: '',
+    birth_year: '',
+    hair_color: '',
+    height: '',
+    mass: '',
+    skin_color: '',
+  },
   searchCharacter: '',
   loading: false,
   loadingSearch: false,
@@ -18,7 +27,7 @@ export const dataSlice = createSlice({
   name: DATA_SLICE_ALIAS,
   initialState,
   reducers: {
-    setSelectedCharacter: (state, action: PayloadAction<any>) => {
+    setSelectedCharacter: (state, action: PayloadAction<DataItem>) => {
       state.selectedCharacter = action.payload;
     },
     setSearchCharacter: (state, action: PayloadAction<string>) => {
@@ -31,7 +40,7 @@ export const dataSlice = createSlice({
     },
     setPageStore: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
-    }
+    },
   },
   extraReducers: {
     [dataFetchAction.pending.type]: (state) => {
@@ -41,10 +50,10 @@ export const dataSlice = createSlice({
 
     [dataFetchAction.fulfilled.type]: (
       state,
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<{ data: Array<DataItem>; count: number }>,
     ) => {
-      if (!state.chacharacters) {
-        state.chacharacters = payload.data;
+      if (!state.characters) {
+        state.characters = payload.data;
       }
       const arr = state.characters.concat(payload.data);
       state.characters = arr.filter(
@@ -72,7 +81,7 @@ export const dataSlice = createSlice({
 
     [searchDataAction.fulfilled.type]: (
       state,
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<{ data: Array<DataItem>; count: number }>,
     ) => {
       state.loadingSearch = false;
       state.characters = payload.data;
@@ -90,9 +99,6 @@ export const dataSlice = createSlice({
   },
 });
 
-export const {
-  setSelectedCharacter,
-  setSearchCharacter,
-  setPageStore,
-} = dataSlice.actions;
+export const { setSelectedCharacter, setSearchCharacter, setPageStore } =
+  dataSlice.actions;
 export default dataSlice.reducer;

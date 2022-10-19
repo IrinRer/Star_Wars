@@ -3,12 +3,12 @@ import HomeComponet from 'component/Home';
 import React from 'react';
 
 const Home = () => {
-    return (
-        <>
-         <Header />
-         <HomeComponet/>
-        </>
-    )
+  return (
+    <>
+      <Header />
+      <HomeComponet />
+    </>
+  );
 };
 
 export default Home;

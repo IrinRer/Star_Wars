@@ -3,6 +3,7 @@ import Modal from 'component/Modal';
 import { useAppDispatch } from 'hooks/redux/useAppDispatch';
 import { useAppSelector } from 'hooks/redux/useAppSelector';
 import usePagination from 'hooks/usePagination';
+import { DataItem } from 'store/data/types';
 import React, { useState, useRef } from 'react';
 import {
   getCharacters,
@@ -30,7 +31,7 @@ const Card = () => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const elementRef = useRef<any>();
 
-  const handleClick = (character) => {
+  const handleClick = (character: DataItem) => {
     setOpen((state) => !state);
     dispatch(setSelectedCharacter(character));
   };
@@ -43,20 +44,22 @@ const Card = () => {
     <div className={styles.wrapper_main}>
       <div className={styles.wrapper}>
         {!loadingSearch && !loading ? (
-          characters.slice(firstContentIndex, lastContentIndex).map((item) => (
-            <div
-              className={styles.wrapper_card}
-              onClick={() => handleClick(item)}
-              key={item.name}
-            >
-              <p className={styles.title}>{item.name}</p>
-              <Circle height={item.height} mass={item.mass} block={false} />
-              <div className={styles.tag_wrapper}>
-                <Tag text={item.gender} />
-                <Tag text={item.birth_year} />
+          characters
+            .slice(firstContentIndex, lastContentIndex)
+            .map((item: DataItem) => (
+              <div
+                className={styles.wrapper_card}
+                onClick={() => handleClick(item)}
+                key={item.name}
+              >
+                <p className={styles.title}>{item.name}</p>
+                <Circle height={item.height} mass={item.mass} block={false} />
+                <div className={styles.tag_wrapper}>
+                  <Tag text={item.gender} />
+                  <Tag text={item.birth_year} />
+                </div>
               </div>
-            </div>
-          ))
+            ))
         ) : (
           <Loader dark />
         )}

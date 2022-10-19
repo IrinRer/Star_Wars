@@ -8,10 +8,10 @@ import Loader from 'component/Loader';
 const CreateRoutes: React.FC = () => {
   const Home = lazy(() => import('pages/Home'));
   const Characters = lazy(() => import('pages/Characters'));
-  
+
   return (
     <BrowserRouter>
-      <Suspense fallback={<Loader dark/>}>
+      <Suspense fallback={<Loader dark />}>
         <ErrorBoundary>
           <Routes>
             <Route path={ROUTES.home.path} element={<Home />} />

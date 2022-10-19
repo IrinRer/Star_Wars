@@ -20,7 +20,7 @@ const Modal: React.FC<IProps> = ({ isOpen, setOpen }) => {
     <div className={styles.modal}>
       <div className={styles.wrapper_sub}>
         <ModalItem />
-        <Close onClick={handleClick} className={styles.close}/>
+        <Close onClick={handleClick} className={styles.close} />
       </div>
     </div>,
     document.body,

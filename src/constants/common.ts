@@ -6,12 +6,12 @@ export const tag = {
 
 export enum NOT_FOUND {
   NA = 'n/a',
-  UNKNOWN = 'unknown'
+  UNKNOWN = 'unknown',
 }
 
 export interface UsePaginationProps {
-  contentPerPage: number,
-  count: number,
+  contentPerPage: number;
+  count: number;
 }
 export interface UsePaginationReturn {
   page: number;
@@ -21,4 +21,4 @@ export interface UsePaginationReturn {
   setPage: (page: number) => void;
 }
 
-export type UsePagination = (UsePaginationProps) => (UsePaginationReturn);
+export type UsePagination = (UsePaginationProps) => UsePaginationReturn;

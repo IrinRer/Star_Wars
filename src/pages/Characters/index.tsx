@@ -6,7 +6,7 @@ const Characters = () => {
   return (
     <>
       <Header />
-      <CharactersComponent/>
+      <CharactersComponent />
     </>
   );
 };

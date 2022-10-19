@@ -28,7 +28,6 @@ const Search = () => {
     dispatch(setSearchCharacter(target.value));
   };
 
-
   return (
     <div>
       <p className={styles.title}>
