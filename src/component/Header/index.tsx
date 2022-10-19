@@ -1,13 +1,19 @@
 import React from 'react';
 import { ReactComponent as Logo } from 'assets/img/Logo.svg';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ROUTES } from 'constants/route';
 import styles from './index.module.scss';
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(ROUTES.home.path);
+  };
+
   return (
     <nav className={styles.wrapper}>
-      <Logo />
+      <Logo onClick={handleClick} />
       <div className={styles.wrapper_link}>
         <NavLink
           to={ROUTES.home.path}

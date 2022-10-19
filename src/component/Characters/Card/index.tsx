@@ -27,6 +27,7 @@ const Card = () => {
           <div
             className={styles.wrapper_card}
             onClick={() => handleClick(item)}
+            key={item.name}
           >
             <p className={styles.title}>{item.name}</p>
             <Circle height={item.height} mass={item.mass} block={false} />
