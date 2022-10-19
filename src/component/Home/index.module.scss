@@ -1,10 +1,22 @@
 @import 'style/color.scss';
+@import 'style/mixins.scss';
 
 .wrapper_main {
   padding: 0px 100px;
   display: flex;
-  align-items: center;
-  background: linear-gradient(180deg, #1F2A63 0%, #17002F 100%) no-repeat;
+  justify-content: space-between;
+  background: linear-gradient(180deg, #1f2a63 0%, #17002f 100%) no-repeat;
+  height: 100vh;
+
+  @include media-breakpoint-only(xs) {
+    padding: 0 50px;
+    height: 100vh;
+
+    svg {
+      display: none;
+    }
+  }
+
   .wrapper_sub {
     display: flex;
     flex-direction: column;
@@ -16,6 +28,12 @@
       letter-spacing: 4px;
       color: white;
       width: 500px;
+
+      @include media-breakpoint-only(xs) {
+        width: 100%;
+        font-size: 3.5em;
+        line-height: 60px;
+      }
     }
 
     h2 {
@@ -25,6 +43,11 @@
       line-height: 37px;
       color: white;
       width: 500px;
+
+      @include media-breakpoint-only(xs) {
+        width: 100%;
+        font-size: 2em;
+      }
     }
 
     button {
@@ -42,5 +65,9 @@
         transform: scale(1.05);
       }
     }
+  }
+
+  svg {
+    height: 50%;
   }
 }
