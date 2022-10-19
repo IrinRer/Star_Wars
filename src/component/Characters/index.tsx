@@ -1,4 +1,5 @@
 import React from "react";
+import Filter from "component/Filter";
 import Search from "./Search";
 import styles from './index.module.scss';
 import Card from "./Card";

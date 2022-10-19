@@ -23,6 +23,11 @@ export const dataSlice = createSlice({
     setSearchCharacter: (state, action: PayloadAction<string>) => {
       state.searchCharacter = action.payload;
     },
+    setFilter: (state, action: PayloadAction<string>) => {
+      state.characters = state.characters.filter(
+        (item) => item.eye_color === action.payload,
+      );
+    },
   },
   extraReducers: {
     [dataFetchAction.pending.type]: (state) => {
@@ -73,5 +78,5 @@ export const dataSlice = createSlice({
   },
 });
 
-export const { setSelectedCharacter, setSearchCharacter } = dataSlice.actions;
+export const { setSelectedCharacter, setSearchCharacter, setFilter} = dataSlice.actions;
 export default dataSlice.reducer;

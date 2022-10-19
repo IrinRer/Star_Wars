@@ -11,7 +11,7 @@ const CreateRoutes: React.FC = () => {
   
   return (
     <BrowserRouter>
-      <Suspense fallback={<Loader dark={false}/>}>
+      <Suspense fallback={<Loader dark/>}>
         <ErrorBoundary>
           <Routes>
             <Route path={ROUTES.home.path} element={<Home />} />

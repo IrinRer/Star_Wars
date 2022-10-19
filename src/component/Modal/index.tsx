@@ -12,7 +12,7 @@ interface IProps {
 const Modal: React.FC<IProps> = ({ isOpen, setOpen }) => {
   if (!isOpen) return null;
 
-  const handleClick = (e: React.FormEvent<EventTarget>) => {
+  const handleClick = () => {
     setOpen(false);
   };
 
