@@ -5,9 +5,9 @@ import { DATA_SLICE_ALIAS } from './types';
 
 export const dataFetchAction = createAsyncThunk(
   `${DATA_SLICE_ALIAS}/fetchData`,
-  async (_, { rejectWithValue }) => {
+  async (page: number, { rejectWithValue }) => {
     try {
-      const response: AxiosResponse = await api().get('/people');
+      const response: AxiosResponse = await api().get(`people/?page=${page}`);
       return { count: response.data.count, data: response.data.results };
     } catch (error) {
       return rejectWithValue(error.message);

@@ -7,7 +7,7 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(dataFetchAction());
+    dispatch(dataFetchAction(1));
   }, [dispatch]);
 
   return <CreateRoutes />;

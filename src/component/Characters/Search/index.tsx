@@ -17,7 +17,7 @@ const Search = () => {
     if (debouncedSearch) {
       dispatch(searchDataAction(debouncedSearch));
     } else {
-      dispatch(dataFetchAction());
+      dispatch(dataFetchAction(1));
     }
   }, [dispatch, debouncedSearch]);
 
