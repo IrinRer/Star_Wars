@@ -2,13 +2,14 @@ import { useAppDispatch } from 'hooks/redux/useAppDispatch';
 import { useAppSelector } from 'hooks/redux/useAppSelector';
 import useDebounce from 'hooks/useDebounce';
 import React, { useEffect } from 'react';
-import { getSearchCharacters } from 'store/data/selectors';
+import { getCount, getSearchCharacters } from 'store/data/selectors';
 import { setSearchCharacter } from 'store/data/slice';
 import { dataFetchAction, searchDataAction } from 'store/data/thunk';
 import styles from './index.module.scss';
 
 const Search = () => {
   const search = useAppSelector(getSearchCharacters);
+  const count = useAppSelector(getCount);
   const dispatch = useAppDispatch();
   const debouncedSearch = useDebounce(search, 500);
 
@@ -28,7 +29,7 @@ const Search = () => {
   return (
     <div>
       <p className={styles.title}>
-        <b>60 Peoples</b> for you to choose your <b>favorite</b>
+        <b>{count} Peoples</b> for you to choose your <b>favorite</b>
       </p>
       <input
         value={search}

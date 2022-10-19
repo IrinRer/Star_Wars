@@ -5,6 +5,7 @@ import { DATA_SLICE_ALIAS } from './types';
 
 const initialState: any = {
   characters: [],
+  totalCount: 0,
   selectedCharacter: {},
   searchCharacter: '',
   loading: false,
@@ -33,7 +34,8 @@ export const dataSlice = createSlice({
       state,
       { payload }: PayloadAction<any>,
     ) => {
-      state.characters = payload;
+      state.characters = payload.data;
+      state.totalCount = payload.count;
       state.loading = false;
     },
 
@@ -56,7 +58,8 @@ export const dataSlice = createSlice({
       { payload }: PayloadAction<any>,
     ) => {
       state.loadingSearch = false;
-      state.characters = payload;
+      state.characters = payload.data;
+      state.totalCount = payload.count;
     },
 
     [searchDataAction.rejected.type]: (

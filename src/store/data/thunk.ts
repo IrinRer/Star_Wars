@@ -8,7 +8,7 @@ export const dataFetchAction = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response: AxiosResponse = await api().get('/people');
-      return response.data.results;
+      return { count: response.data.count, data: response.data.results };
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -22,7 +22,7 @@ export const searchDataAction = createAsyncThunk(
       const response: AxiosResponse = await api().get(
         `/people/?search=${name}`,
       );
-      return response.data.results;
+      return { count: response.data.count, data: response.data.results };
     } catch (error) {
       return rejectWithValue(error.message);
     }
