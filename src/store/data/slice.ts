@@ -1,4 +1,4 @@
-import { dataFetchAction } from 'store/data/thunk';
+import { dataFetchAction, searchDataAction } from 'store/data/thunk';
 import { AxiosError } from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DATA_SLICE_ALIAS } from './types';
@@ -6,7 +6,9 @@ import { DATA_SLICE_ALIAS } from './types';
 const initialState: any = {
   characters: [],
   selectedCharacter: {},
+  searchCharacter: '',
   loading: false,
+  loadingSearch: false,
   error: null,
 };
 
@@ -16,6 +18,9 @@ export const dataSlice = createSlice({
   reducers: {
     setSelectedCharacter: (state, action: PayloadAction<any>) => {
       state.selectedCharacter = action.payload;
+    },
+    setSearchCharacter: (state, action: PayloadAction<string>) => {
+      state.searchCharacter = action.payload;
     },
   },
   extraReducers: {
@@ -40,8 +45,30 @@ export const dataSlice = createSlice({
       state.error = payload;
       state.characters = [];
     },
+
+    [searchDataAction.pending.type]: (state) => {
+      state.loadingSearch = true;
+      state.error = null;
+    },
+
+    [searchDataAction.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<any>,
+    ) => {
+      state.loadingSearch = false;
+      state.characters = payload;
+    },
+
+    [searchDataAction.rejected.type]: (
+      state,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.loadingSearch = false;
+      state.error = payload;
+      state.characters = initialState.characters;
+    },
   },
 });
 
-export const { setSelectedCharacter } = dataSlice.actions;
+export const { setSelectedCharacter, setSearchCharacter } = dataSlice.actions;
 export default dataSlice.reducer;

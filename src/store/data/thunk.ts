@@ -14,3 +14,17 @@ export const dataFetchAction = createAsyncThunk(
     }
   },
 );
+
+export const searchDataAction = createAsyncThunk(
+  `${DATA_SLICE_ALIAS}/searchData`,
+  async (name: string, { rejectWithValue }) => {
+    try {
+      const response: AxiosResponse = await api().get(
+        `/people/?search=${name}`,
+      );
+      return response.data.results;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);

@@ -1,9 +1,9 @@
-import { tag } from 'constants/common';
+import { NOT_FOUND, tag } from 'constants/common';
 import React from 'react';
 import styles from './index.module.scss';
 
 const Tag = ({ text }) => {
-  if (text === 'n/a' || text === 'unknown') {
+  if (text === NOT_FOUND.NA || text === NOT_FOUND.UNKNOWN) {
     return null;
   }
   return (

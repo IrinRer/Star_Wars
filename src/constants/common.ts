@@ -3,3 +3,8 @@ export const tag = {
   male: 'green',
   hermaphrodite: 'yellow',
 };
+
+export enum NOT_FOUND {
+  NA = 'n/a',
+  UNKNOWN = 'unknown'
+}

@@ -3,7 +3,11 @@ import Modal from 'component/Modal';
 import { useAppDispatch } from 'hooks/redux/useAppDispatch';
 import { useAppSelector } from 'hooks/redux/useAppSelector';
 import React, { useState } from 'react';
-import { getCharacters, getLoading } from 'store/data/selectors';
+import {
+  getCharacters,
+  getLoading,
+  getSearchLoading,
+} from 'store/data/selectors';
 import { setSelectedCharacter } from 'store/data/slice';
 import Circle from '../Circle';
 import Tag from '../Tag';
@@ -12,6 +16,7 @@ import styles from './index.module.scss';
 const Card = () => {
   const characters = useAppSelector(getCharacters);
   const loading = useAppSelector(getLoading);
+  const loadingSearch = useAppSelector(getSearchLoading);
   const dispatch = useAppDispatch();
   const [isOpen, setOpen] = useState<boolean>(false);
 
@@ -22,7 +27,7 @@ const Card = () => {
 
   return (
     <div className={styles.wrapper}>
-      {!loading ? (
+      {!loadingSearch && !loading ? (
         characters.map((item) => (
           <div
             className={styles.wrapper_card}
