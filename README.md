@@ -1,70 +1,250 @@
-# Getting Started with Create React App
+## Описание 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Приложение по звездным войнам с информационными карточками персонажей. При загрузке данных с сервера отображается на странице загрузчик. Все запросы к АПИ делаются через redux. Реализована пагинация и бесконечная подгрузку карточек на страницу при нажатие на кнопку. 
 
-## Available Scripts
+**API** - https://swapi.dev/
 
-In the project directory, you can run:
+**Приложение содержит 3 страницы:**
 
-### `npm start`
+1. Главная: страница содержит приветствие пользователя, навигационное меню (активная в данный момент страница в меню подсвечена), кнопку перехода к странице с карточками персонажей.
+2. Страница с карточками о персонажах.
+3. Страница с ошибкой 404. На странице предусмотрена возможность (кнопка) для возврата на главную.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Страница с карточками о персонажах**
 
-### `npm test`
+1. Навигационное меню доступно как на главной странице, так и на странице с карточками.
+2. Заголовок страницы содержит общее количество персонажей.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Поиск персонажей:**
 
-### `npm run build`
+1. На странице есть поле для ввода данных для поиска.
+2. Поиск осуществляться при вводе текста в поле
+3. Запрос с параметрами поиска отправляется не на каждый введенный пользователем символ. Механизм debounce.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Карточки персонажей:**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Карточка содержит имя и общую информацию о персонаже
+2. Карточка кликабельна. При клике на карточку открывается модальное окно с подробной информацией о персонаже.
+3. Присутствуют цветные тэги. Голубой с датой рождения. Желтый, зеленый и фиолетовый с гендерным признаком. При отсутствии какой-либо информации тэг в карточке не отображается.
+4. В модальном окне с подробной информацией выводится иконка в соответствии с полем gender выбранного персонажа.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Компонент карточки протестирован.**
 
-### `npm run eject`
+## Технологии 
+1. React
+2. TypeScript
+3. Redux (thunk, redux-toolkit)
+4. CSS modules
+5. React-router-dom 6
+6. Axious
+7. Classnames
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Что было сделано
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Сделан адаптив под разные устройства.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Адаптив сделан с помощью mixin, который принимает переменные и в зависимости от значения возвращает нужный @media.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. Вспомогательная функция api, которая позволят создовать объект axios с нужными заголовками.
 
-## Learn More
+```
+export const api = (): AxiosInstance => {
+  return axios.create({
+    baseURL: getBackendURL(),
+  });
+};
+```
+В thunk нужно просто вызывать эту функцию. Это позволяет избежать дублирования кода.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. Все приложение обернуто в Error Boundary, который рендерит специальный компонент, если возникают ошибки. Это позволяет избежать возможный крах приложения.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Используется общий компонент для 404 ERROR и для ошибок, которые ловятся в Error Boundary. Этот универсальный компонент принимает разные props и в зависимости от этого отображается нужный текст. Это позволяет избежать дублирования кода.
 
-### Code Splitting
+4. TypeScript позволяет использовать Record, что очень удобно при создании роутов, так как мы заранее определяем в объекте какие страницы будут, это позволяет избежать ошибок.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+5. Модальное окно создается через createPortal, это сделано для того, чтобы модальное окно было поверх родителя.
 
-### Analyzing the Bundle Size
+```
+return createPortal(
+    <div className={styles.modal} onClick={handleClick}>
+      <Modal handleClickModal={setOpen} />
+    </div>,
+    document.body,
+  );
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Первый аргумент - это непосредственно модальное окно.
 
-### Making a Progressive Web App
+Второй аргумент - это то, место куда должно быть вставлено модальное окно.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Модальное окно закрывается при клике на крестик.
 
-### Advanced Configuration
+6. Так как в приложении две основные страницы (Главная и с карточками), то пользователь может зайти только на одну и не зайти на другую, в таком случае нет смысла сразу подгружать эти две страницы.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Использую **React.lazy**, чтобы страница загружалась в том случае, если пользователь на нее зашел. Это позволяет уменьшить размер первоначального bundle и сделать загрузку приложения быстрее.
 
-### Deployment
+```
+ const Home = lazy(() => import('pages/Home'));
+ const Characters = lazy(() => import('pages/Characters'));
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+7. Loader при загрузке страницы и загрузке данных.
 
-### `npm run build` fails to minify
+Вместе с React.lazy используется React.Suspense, у него есть свойство fallback, в которое записывается компонент (или что-то), что будет отражаться пока страница не загрузилась.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+В **slice** в **initialState** есть поле **loading**, которое позволяет узнать загрузилить ли данные, так как если нет, то нужно показывать загрузку. 
+
+```
+  [dataFetchAction.pending.type]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+ ```
+Состояние **pending** - значит данные еще не загрузились и должен отображаться **Loader**.
+
+```
+[dataFetchAction.fulfilled.type]: (state, { payload }: PayloadAction<{ data: Array<DataItem>; count: number }>,
+    ) => {
+       .....
+      state.loading = false;
+    },
+``` 
+
+Состояние **fulfilled** - значит данные еще загрузились и их можно уже отобразить. 
+
+**Loader** улучшает UX, так как пользователь знает, что ему нужно что-то ожидать и ждет, а не видит просто белую страницу. 
+
+8. Хук **useDebounce** позволяет отложить запрос на сервер на 500мс. 
+
+```
+export default function useDebounce(value: string, delay: number) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+    
+  }, [value]);
+
+  return debouncedValue;
+}
+```
+Когда пользователь начинает вводить что-то в input, то это значение идет сначала в **store**, потом с помощью **useSelector** 
+достается и передается в **useDebounce**, также в этот хук нужно передать время задержки (**delay**). 
+
+В хуке я использую **setTimeout** внутри **useEffect**, так как в *useEffect* должны обрабатываться различные побочные эффекты. 
+
+Чтобы не было **memory leak** очищаю **setTimeout** перед демонтированием компонента. 
+
+Когда пройдет **delay** будет возвращаться **debouncedValue**, а не просто **value**, это гарантирует то, что задержка *была именно на этом value*. 
+
+9. Пагинация через хук **usePagination**. 
+
+```
+const usePagination: UsePagination = ({ contentPerPage, count }) => {
+  const [page, setPage] = useState(1);
+  const pageCount = Math.ceil(count / contentPerPage); // число сколько должно быть страниц
+  const lastContentIndex = page * contentPerPage; //  первый индекс для метода .slice();
+  const firstContentIndex = lastContentIndex - contentPerPage; // последний индекс для метода .slice();
+
+  // функция для перехода на определенную страницу.
+  const setPageSAFE = (num: number) => {
+    if (num > pageCount) {
+      setPage(pageCount);
+    } else if (num < 1) {
+      setPage(1);
+    } else {
+      setPage(num);
+    }
+  };
+
+  return {
+    totalPages: pageCount,
+    setPage: setPageSAFE,
+    firstContentIndex,
+    lastContentIndex,
+    page,
+  };
+};
+
+export default usePagination;
+```
+
+Затем использую этот хук. 
+
+```
+const { firstContentIndex, lastContentIndex, page, setPage, totalPages } =
+    usePagination({
+      contentPerPage: 5,
+      count: characters.length,
+});
+```
+**contentPerPage** - сколько карточек должно быть на странице 
+
+**count** - общее число загруженных персонажей 
+
+Когда достигается последняя страница можно нажать на кнопку **Загрузить еще** и персонажи будут подгружаться. 
+
+Использую **elementRef** так как если бы значение устанавливалось в **local state**, происходил бы слишком частый **render**. 
+```
+elementRef.current === page ? (
+        <button type="button" className={styles.btn} onClick={handlePagination}>
+          Загрузить еще
+        </button>
+```
+
+Активная страница выглядит как большой круг, прошлые страницы выглядят как меньшие круги. 
+
+```
+ className={classnames(styles.page, {
+                [styles.page_active]: page === el + 1,
+              })}
+```
+
+10. Бесконечная подгрузка данных 
+
+В **store** объединяются старые данные с новыми. 
+
+```
+ const arr = state.characters.concat(payload.data);
+      state.characters = arr.filter(
+        (item: DataItem, i: number) =>
+          arr.findIndex((a: DataItem) => a.name === item.name) === i,
+      );
+``` 
+
+11. Тестирование карточек с персонажами. 
+
+Тест на то, что происходит **render** компонента **CharactersComponent**, который, по сути, включает в себя все другие компоненты, поэтому его
+**render** показывает, что другие компоненты тоже успешно отрисовались на странице.
+
+Тест snapshot CharactersComponent. 
+
+Тесты на отображение данных из store.
+
+## Как запустить
+
+Можете открыть: https://irinrer.github.io/Star_Wars/ 
+
+Или можете запустить у себя.
+
+1. Клонируете репозиторий
+``git clone https://github.com/IrinRer/Star_Wars.git``
+
+2. Устанавливаете зависимости
+
+``npm i``
+
+3. Запускаете проект
+
+``npm start``
+
+4. Чтобы запустить тесты
+
+``npm test``
