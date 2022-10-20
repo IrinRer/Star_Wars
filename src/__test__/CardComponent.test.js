@@ -1,11 +1,12 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import axios from 'axios';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { store } from '../store/index';
 import CharactersComponent from '../component/Characters/index';
-import Tag from '../component/Characters/Tag';
+import Card from '../component/Characters/Card';
 
-describe('Card component', () => {
+describe('CharactersComponent component', () => {
   it('CharactersComponent render"', () => {
     render(
       <Provider store={store}>
@@ -27,10 +28,42 @@ describe('Card component', () => {
   });
 });
 
-describe('Tag component', () => {
-  it('Tag render"', () => {
-    render(<Tag text="text" />);
+describe('Card component', () => {
+  test('it displays a list of people-list', async () => {
+    render(
+      <Provider store={store}>
+        <Card />
+      </Provider>,
+    );
 
-    expect(screen.getByText('text')).toBeInTheDocument();
+    const peopleList = await waitFor(() => screen.getByTestId('people-list'));
+    expect(peopleList).toBeInTheDocument();
+  });
+});
+
+jest.mock('axios');
+
+const fakeData = {
+  name: 'test name',
+  eye_color: 'test color eye',
+  skin_color: 'test color skin',
+};
+
+axios.get.mockResolvedValue({ data: fakeData });
+
+describe('Card component', () => {
+  test('it displays a row for each people', async () => {
+    axios.get.mockResolvedValue({ data: fakeData });
+
+    render(
+      <Provider store={store}>
+        <Card />
+      </Provider>,
+    );
+
+    const peopleList = await waitFor(() =>
+      screen.findAllByTestId('people-list'),
+    );
+    expect(peopleList).toHaveLength(1);
   });
 });

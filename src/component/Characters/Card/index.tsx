@@ -42,7 +42,7 @@ const Card = () => {
 
   return (
     <div className={styles.wrapper_main}>
-      <div className={styles.wrapper}>
+      <div className={styles.wrapper} data-testid="people-list">
         {!loadingSearch && !loading ? (
           characters
             .slice(firstContentIndex, lastContentIndex)
