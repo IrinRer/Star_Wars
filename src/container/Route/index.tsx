@@ -10,7 +10,7 @@ const CreateRoutes: React.FC = () => {
   const Characters = lazy(() => import('pages/Characters'));
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Suspense fallback={<Loader dark />}>
         <ErrorBoundary>
           <Routes>
