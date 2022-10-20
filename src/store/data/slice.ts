@@ -57,8 +57,8 @@ export const dataSlice = createSlice({
       }
       const arr = state.characters.concat(payload.data);
       state.characters = arr.filter(
-        (item: any, i: any) =>
-          arr.findIndex((a: any) => a.name === item.name) === i,
+        (item: DataItem, i: number) =>
+          arr.findIndex((a: DataItem) => a.name === item.name) === i,
       );
 
       state.totalCount = payload.count;

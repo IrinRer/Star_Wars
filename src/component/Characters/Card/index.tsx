@@ -61,7 +61,7 @@ const Card = () => {
               </div>
             ))
         ) : (
-          <Loader dark />
+          <Loader />
         )}
         <Modal isOpen={isOpen} setOpen={setOpen} />
       </div>
